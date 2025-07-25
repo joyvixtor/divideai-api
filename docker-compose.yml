@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  api:
+    build: .
+    container_name: divideao-api
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    depends_on:
+      - rabbitmq
+    env_file:
+      - .env
+
+  rabbitmq:
+    image: rabbitmq:3.9-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   # Porta para a aplicação
+      - "15672:15672"  # Interface de gerenciamento web
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
